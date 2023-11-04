@@ -5,22 +5,97 @@
     <meta http-equiv='X-UA-Compatible' content='IE=edge'>
     <title>Page Title</title>
     <meta name='viewport' content='width=device-width, initial-scale=1'>
-    <link rel='stylesheet' type='text/css' media='screen' href='main.css'>
+
 
     <style>
+        *{
+            box-sizing: border-box;
+            margin: 0;
+        }
         body{
             background-color: tomato;
         }
+        div.cats{
+            display: grid;
+            grid-gap:10px;
+            grid-template-columns: 1fr 1fr 1fr;
+            width : 100%;
+        }
+        div.cats .cat{
+            background-color: lightblue;
+            height: 300px;
+
+        }
+        h1{
+            font-size: 30px;
+            color: white;
+            text-align: center;
+            text-transform: capitalize;
+        }
+        h3{
+            text-align: center;
+            
+
+        }
+        @media screen and (max-width: 600px) {
+            div.cats{
+                width: 90%;
+                display: grid;
+                height: auto;
+                grid-template-columns: 1fr;
+                margin-left: 5%;
+            }
+            body{
+                background-color: lightblue;
+            }
+            div.cats .cat{
+                background-color: tomato;
+            }
+            
+        
+          }
     </style>
     
 </head>
 <body>
-    <h1>Welcome to Jihane News</h1>
-    {% for category in categories %}
-
-    <h2> <a href="{% url 'category' category.id  %}">{{category.category }}</a> </h2>
+    <div style="font-size: 23px; background-color:white; text-align:center">
+        {% if messages %}
+<ul class="messages">
+    {% for message in messages %}
+    <li {% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
     {% endfor %}
+</ul>
+{% endif %}
+    </div>
+    <section>
+        <div class="container">
+            <div class="header">
+                <h1>Welcome to Rahalet</h1>
+                <h3>book your trip from here</h3>
+                <a href="{% url 'polls:index' %}">polls</a>
+                
+                {% if request.user.is_authenticated and request.user.is_staff and request.user.username == 'hakim'%}
+                
+                <a href="{% url 'admin:index' %}">admin</a>
+                {%  endif %}
+                <a href="{% url 'polls:voted' voted}"> voter</a>
+                
+            </div>
+            <div class="cats">
+                {% for wil in wilayas %}
+
+                <div class="cat">
+                    <h2> <a href="{% url 'wilaya' wil.wilaya_name %}">{{wil.wilaya_name|title }}</a> </h2>
+                    <span>{{wil.wilaya_code}}</span>
+                    <h3>{{wil.created_on}}</h3>
+                    <h3>Il y a {{wil.creation_month }}</h3>
+                    
+
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </section>
     
-    <script src='main.js'></script>
 </body>
 </html>

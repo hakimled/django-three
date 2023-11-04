@@ -7,10 +7,41 @@
     <meta name='viewport' content='width=device-width, initial-scale=1'>
     <link rel='stylesheet' type='text/css' media='screen' href='main.css'>
     <script src='main.js'></script>
+    <style>
+        *{
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        div.container{
+            width: 90%;
+            margin: auto;
+            background-color: lightblue;
+            height: 100vh;
+        }
+        nav h1{
+            text-align: center;
+            font-size: 34px;
+        }
+        
+    </style>
 </head>
 <body>
+    <nav>
+        <h1>Welcome to {{category.category|title}}</h1>
+    </nav>
 
-    {{category.category}}
+    <div class="container">
+       
+
+    <ul>
+        {% for news in category.news_set.all %}
+            <h2>{{ news.title|title}}</h2>
+            <li>{{news.content }}</li>
+            
+        {% endfor %}
+        </ul>
+    </div>
     
 </body>
 </html>
